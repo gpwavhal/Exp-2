@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Numbers and Create CSV</title>
+</head>
+<body>
+    <h1>Add Numbers and Create CSV</h1>
+
+    <label for="num1">Enter number 1:</label>
+    <input type="number" id="num1">
+
+    <label for="num2">Enter number 2:</label>
+    <input type="number" id="num2">
+
+    <button onclick="addAndCreateCSV()">Add and Create CSV</button>
+
+    <script>
+        function addAndCreateCSV() {
+            var num1 = parseFloat(document.getElementById('num1').value);
+            var num2 = parseFloat(document.getElementById('num2').value);
+
+            if (!isNaN(num1) && !isNaN(num2)) {
+                var result = num1 + num2;
+
+                // Create CSV content
+                var csvContent = "Result\n" + result;
+
+                // Create a Blob (binary large object) from the CSV content
+                var blob = new Blob([csvContent], { type: 'text/csv' });
+
+                // Create a link element
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'result.csv';
+
+                // Append the link to the document and trigger a click event
+                document.body.appendChild(link);
+                link.click();
+
+                // Remove the link from the document
+                document.body.removeChild(link);
+            } else {
+                alert('Invalid input. Please enter valid numbers.');
+            }
+        }
+    </script>
+</body>
+</html>
